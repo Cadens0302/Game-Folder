@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Game 03 | Arcade Control</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav-shell" aria-label="Primary navigation">
+        <a class="brand-mark" href="index.html" aria-label="Arcade Control home">
+          <span class="brand-led" aria-hidden="true"></span>
+          <span><span class="brand-title">Arcade Control</span><span class="brand-subtitle">Bay 03 online</span></span>
+        </a>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-menu">
+          <span class="sr-only">Toggle navigation</span><span></span><span></span><span></span>
+        </button>
+        <div class="nav-links" id="primary-menu">
+          <a class="nav-link" href="index.html">Home</a>
+          <a class="nav-link" href="game-one.html">Game 01</a>
+          <a class="nav-link" href="game-two.html">Game 02</a>
+          <a class="nav-link active" href="game-three.html" aria-current="page">Game 03</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="game-page">
+      <section class="section-shell game-hero">
+        <div>
+          <p class="eyebrow"><span class="mini-led"></span>Module slot 03</p>
+          <h1>Game Three</h1>
+          <p class="hero-text">
+            The third station completes the multipage collection structure. It has its own display
+            area, controls, and room for a future game-specific interface.
+          </p>
+        </div>
+        <aside class="module-card control-card">
+          <div class="card-hardware" aria-hidden="true"><span></span><span></span><span></span></div>
+          <p class="card-kicker">Readiness</p>
+          <div class="gauge"><span style="--value: 64%"></span></div>
+          <p>Reserved for the final game in the trio, with shared styling already connected.</p>
+          <button class="button primary" type="button" disabled>Start disabled</button>
+        </aside>
+      </section>
+      <section class="section-shell placeholder-console">
+        <div class="screen-card">
+          <span class="screen-label">GAME_03_DISPLAY</span>
+          <div class="empty-slot">Awaiting game logic</div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="section-shell footer-inner">
+        <span class="footer-status"><span class="mini-led"></span>Bay 03 staged</span>
+        <a href="index.html">Return home</a>
+      </div>
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>

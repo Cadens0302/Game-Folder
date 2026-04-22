@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Game 01 | Arcade Control</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav-shell" aria-label="Primary navigation">
+        <a class="brand-mark" href="index.html" aria-label="Arcade Control home">
+          <span class="brand-led" aria-hidden="true"></span>
+          <span><span class="brand-title">Arcade Control</span><span class="brand-subtitle">Bay 01 online</span></span>
+        </a>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-menu">
+          <span class="sr-only">Toggle navigation</span><span></span><span></span><span></span>
+        </button>
+        <div class="nav-links" id="primary-menu">
+          <a class="nav-link" href="index.html">Home</a>
+          <a class="nav-link active" href="game-one.html" aria-current="page">Game 01</a>
+          <a class="nav-link" href="game-two.html">Game 02</a>
+          <a class="nav-link" href="game-three.html">Game 03</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="game-page">
+      <section class="section-shell game-hero">
+        <div>
+          <p class="eyebrow"><span class="mini-led"></span>Module slot 01</p>
+          <h1>Game One</h1>
+          <p class="hero-text">
+            This station is staged for the first game. The final mechanics can drop into this page
+            while keeping the same tactile interface shell.
+          </p>
+        </div>
+        <aside class="module-card control-card">
+          <div class="card-hardware" aria-hidden="true"><span></span><span></span><span></span></div>
+          <p class="card-kicker">Readiness</p>
+          <div class="gauge"><span style="--value: 72%"></span></div>
+          <p>Placeholder game surface, status readouts, and action controls are mounted.</p>
+          <button class="button primary" type="button" disabled>Start disabled</button>
+        </aside>
+      </section>
+      <section class="section-shell placeholder-console">
+        <div class="screen-card">
+          <span class="screen-label">GAME_01_DISPLAY</span>
+          <div class="empty-slot">Awaiting game logic</div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="section-shell footer-inner">
+        <span class="footer-status"><span class="mini-led"></span>Bay 01 staged</span>
+        <a href="game-two.html">Next bay</a>
+      </div>
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>
