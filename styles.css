@@ -661,6 +661,463 @@ h3 {
   color: var(--accent);
 }
 
+.game-one-console {
+  margin-top: 2rem;
+}
+
+.game-page,
+.game-page * {
+  image-rendering: pixelated;
+}
+
+.game-page .module-card,
+.game-page .button,
+.game-page .gauge,
+.game-page .gauge span {
+  border-radius: 4px;
+}
+
+.rpg-screen {
+  min-height: auto;
+  color: #35505f;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.16) 50%, rgba(255, 255, 255, 0.04) 50%),
+    radial-gradient(circle at 18% 16%, rgba(255, 244, 163, 0.52), transparent 34%),
+    radial-gradient(circle at 82% 12%, rgba(130, 184, 255, 0.4), transparent 32%),
+    #f5fff0;
+  background-size: 100% 8px, auto, auto, auto;
+  border-radius: 4px;
+}
+
+.rpg-layout {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.rpg-panel,
+.battle-log,
+.gear-card,
+.inventory-item {
+  border: 1px solid rgba(158, 255, 183, 0.22);
+  border-radius: 4px;
+  background:
+    linear-gradient(135deg, rgba(255, 244, 163, 0.32), transparent 46%),
+    rgba(255, 255, 255, 0.78);
+  box-shadow: 6px 6px 0 rgba(79, 112, 133, 0.18), -3px -3px 0 rgba(255, 255, 255, 0.82);
+}
+
+.rpg-panel {
+  padding: 1.25rem;
+}
+
+.rpg-panel h2,
+.rpg-panel h3,
+.gear-card h3,
+.inventory-item h3 {
+  max-width: none;
+  margin-inline: auto;
+  color: #35505f;
+  text-shadow: 0 1px 0 #ffffff;
+}
+
+.rpg-panel p,
+.gear-card p,
+.inventory-item p,
+.battle-log p {
+  color: #4d6573;
+}
+
+.action-panel {
+  position: relative;
+  grid-column: 1 / -1;
+  grid-row: 1;
+}
+
+.rpg-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  overflow: hidden;
+  margin: 0;
+  border: 1px solid rgba(158, 255, 183, 0.26);
+  border-radius: 4px;
+  background: rgba(120, 221, 122, 0.34);
+}
+
+.rpg-stat-grid div {
+  min-width: 4.25rem;
+  padding: 0.45rem 0.55rem;
+  background: rgba(255, 255, 255, 0.82);
+}
+
+.loadout-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.gear-card {
+  position: relative;
+  min-height: 15rem;
+  padding: 1rem;
+  overflow: hidden;
+  border-width: 2px;
+}
+
+.gear-card::before,
+.inventory-item::before {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  opacity: 0.55;
+  background: linear-gradient(90deg, transparent, var(--rarity-glow, rgba(158, 255, 183, 0.28)), transparent);
+  transform: translateX(-110%);
+  transition: transform 500ms ease;
+}
+
+.gear-card:hover::before,
+.inventory-item:hover::before {
+  transform: translateX(110%);
+}
+
+.gear-card[data-rarity="common"],
+.inventory-item[data-rarity="common"] {
+  --rarity-glow: rgba(158, 255, 183, 0.2);
+}
+
+.gear-card[data-rarity="uncommon"],
+.inventory-item[data-rarity="uncommon"] {
+  --rarity-glow: rgba(34, 197, 94, 0.32);
+  border-color: rgba(34, 197, 94, 0.42);
+}
+
+.gear-card[data-rarity="rare"],
+.inventory-item[data-rarity="rare"] {
+  --rarity-glow: rgba(96, 165, 250, 0.36);
+  border-color: rgba(96, 165, 250, 0.48);
+}
+
+.gear-card[data-rarity="epic"],
+.inventory-item[data-rarity="epic"] {
+  --rarity-glow: rgba(168, 85, 247, 0.38);
+  border-color: rgba(168, 85, 247, 0.52);
+}
+
+.gear-card[data-rarity="legendary"],
+.inventory-item[data-rarity="legendary"] {
+  --rarity-glow: rgba(234, 179, 8, 0.46);
+  border-color: rgba(234, 179, 8, 0.62);
+}
+
+.gear-art {
+  position: relative;
+  display: grid;
+  width: min(8rem, 80%);
+  height: 7rem;
+  margin: 0 auto 1rem;
+  place-items: center;
+}
+
+.sword-art::before {
+  width: 1.1rem;
+  height: 5.8rem;
+  border-radius: 0;
+  content: "";
+  background:
+    linear-gradient(90deg, transparent 0 18%, #d8ffe4 18% 35%, #ffffff 35% 55%, #38bdf8 55% 82%, transparent 82%),
+    #7dd3fc;
+  box-shadow: 0 0 0 3px rgba(125, 211, 252, 0.35);
+  transform: rotate(42deg);
+}
+
+.sword-art::after {
+  position: absolute;
+  width: 4.4rem;
+  height: 0.7rem;
+  border-radius: 0;
+  content: "";
+  background: linear-gradient(90deg, #ff4757, #f8fafc, #ff4757);
+  box-shadow: 0 0 0 3px rgba(255, 71, 87, 0.26);
+  transform: translateY(2rem) rotate(42deg);
+}
+
+.armor-art::before {
+  width: 5.6rem;
+  height: 5.6rem;
+  border: 2px solid rgba(216, 255, 228, 0.76);
+  border-radius: 0;
+  content: "";
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.55) 0 22%, transparent 22% 100%),
+    linear-gradient(180deg, rgba(125, 211, 252, 0.42), rgba(255, 71, 87, 0.18));
+  clip-path: polygon(15% 5%, 85% 5%, 95% 42%, 74% 95%, 26% 95%, 5% 42%);
+  box-shadow: inset 0 0 0 4px rgba(255, 255, 255, 0.16), 0 0 0 4px rgba(125, 211, 252, 0.28);
+}
+
+.map-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.map-toolbar span {
+  min-height: 2.75rem;
+  padding: 0.85rem 1rem;
+  border: 2px solid rgba(79, 112, 133, 0.22);
+  border-radius: 4px;
+  color: #35505f;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 4px 4px 0 rgba(79, 112, 133, 0.14);
+}
+
+.world-view {
+  display: block;
+  width: 100%;
+  min-height: clamp(28rem, 64vw, 42rem);
+  border: 4px solid rgba(79, 112, 133, 0.34);
+  border-radius: 10px;
+  background: #d9f7ff;
+  box-shadow: inset 6px 6px 0 rgba(79, 112, 133, 0.16), 6px 6px 0 rgba(79, 112, 133, 0.18);
+  image-rendering: auto;
+}
+
+.world-view:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.action-panel:fullscreen {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: auto auto auto minmax(0, 1fr) auto auto;
+  align-content: start;
+  gap: 0.55rem;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  padding: 1rem;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(217, 247, 255, 0.82), transparent 34%),
+    linear-gradient(135deg, rgba(255, 244, 163, 0.38), rgba(149, 200, 255, 0.22)),
+    #f5fff0;
+}
+
+.action-panel:fullscreen .world-view {
+  min-height: 0;
+  max-height: calc(100vh - 18rem);
+}
+
+.action-panel:fullscreen .map-toolbar {
+  margin-bottom: 0.25rem;
+}
+
+.action-panel:fullscreen .control-row,
+.action-panel:fullscreen .inventory-drawer {
+  margin-top: 0;
+}
+
+.action-panel:fullscreen .control-row {
+  gap: 0.5rem;
+}
+
+.action-panel:fullscreen .inventory-drawer {
+  top: 7.5rem;
+  right: 1rem;
+  width: min(26rem, 34vw);
+  max-height: calc(100vh - 9rem);
+  grid-template-columns: 1fr;
+  gap: 0.55rem;
+  min-height: 0;
+}
+
+.action-panel:fullscreen .inventory-drawer .rpg-panel,
+.action-panel:fullscreen .inventory-drawer .battle-log {
+  min-height: 0;
+  padding: 0.65rem;
+}
+
+.action-panel:fullscreen .inventory-list,
+.action-panel:fullscreen .battle-log div {
+  max-height: 7rem;
+  overflow: auto;
+}
+
+.action-panel:fullscreen .upgrade-button {
+  min-height: 3.4rem;
+  padding: 0.55rem 0.65rem;
+}
+
+.path-grid,
+.upgrade-grid {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.path-button,
+.upgrade-button {
+  min-height: 4.75rem;
+  padding: 0.9rem 1rem;
+  border: 2px solid rgba(79, 112, 133, 0.18);
+  border-radius: 4px;
+  color: #35505f;
+  font: inherit;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 4px 4px 0 rgba(79, 112, 133, 0.14);
+  cursor: pointer;
+  transition:
+    transform 160ms var(--ease-mechanical),
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.path-button span,
+.upgrade-button span {
+  display: block;
+  color: #35505f;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.path-button small,
+.upgrade-button small {
+  display: block;
+  margin-top: 0.35rem;
+  color: #647886;
+  line-height: 1.45;
+}
+
+.path-button:hover,
+.path-button.active,
+.upgrade-button:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 71, 87, 0.74);
+  box-shadow: 5px 5px 0 rgba(255, 71, 87, 0.2);
+}
+
+.control-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.inventory-drawer {
+  position: absolute;
+  z-index: 5;
+  top: clamp(8rem, 18vw, 10.5rem);
+  right: 1.25rem;
+  display: grid;
+  width: min(28rem, 38vw);
+  max-height: calc(100% - 12rem);
+  grid-template-columns: 1fr;
+  gap: 0.65rem;
+  overflow: auto;
+  margin-top: 0;
+  padding: 0.65rem;
+  border: 3px solid rgba(36, 157, 255, 0.82);
+  border-radius: 10px;
+  background: rgba(245, 255, 240, 0.94);
+  box-shadow: 8px 8px 0 rgba(79, 112, 133, 0.18), -3px -3px 0 rgba(255, 255, 255, 0.78);
+}
+
+.inventory-drawer[hidden] {
+  display: none;
+}
+
+.inventory-drawer .rpg-panel,
+.inventory-drawer .battle-log {
+  padding: 0.7rem;
+}
+
+.inventory-drawer h2 {
+  font-size: clamp(1.25rem, 2.5vw, 1.7rem);
+}
+
+.inventory-drawer .gear-card {
+  min-height: 8.5rem;
+  padding: 0.65rem;
+}
+
+.inventory-drawer .gear-art {
+  height: 4.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.danger-button {
+  color: var(--accent);
+}
+
+.inventory-list {
+  display: grid;
+  gap: 0.75rem;
+  max-height: 24rem;
+  overflow: auto;
+  padding-right: 0.25rem;
+}
+
+.inventory-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem;
+  overflow: hidden;
+}
+
+.inventory-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.inventory-actions .button {
+  min-height: 2.5rem;
+  padding-inline: 0.8rem;
+  font-size: 0.68rem;
+}
+
+.inventory-empty {
+  margin: 0;
+  padding: 1rem;
+  border: 1px dashed rgba(158, 255, 183, 0.28);
+  border-radius: 4px;
+}
+
+.battle-log {
+  margin-top: 0;
+  padding: 1rem;
+}
+
+.battle-log div {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.battle-log p {
+  margin: 0;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+
 @keyframes pulse-led {
   0%,
   100% {
@@ -714,8 +1171,14 @@ h3 {
   }
 
   .status-strip,
-  .game-grid {
+  .game-grid,
+  .rpg-layout {
     grid-template-columns: 1fr;
+  }
+
+  .action-panel {
+    grid-column: auto;
+    grid-row: auto;
   }
 
   .module-card {
@@ -746,5 +1209,27 @@ h3 {
 
   .screen-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .rpg-screen {
+    padding: 1rem;
+    border-width: 5px;
+  }
+
+  .rpg-stat-grid,
+  .loadout-grid,
+  .inventory-item,
+  .inventory-drawer {
+    grid-template-columns: 1fr;
+  }
+
+  .inventory-drawer {
+    position: static;
+    width: auto;
+    max-height: 28rem;
+  }
+
+  .control-row .button {
+    width: 100%;
   }
 }

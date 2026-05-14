@@ -35,31 +35,128 @@
       <section class="section-shell game-hero">
         <div>
           <p class="eyebrow"><span class="mini-led"></span>Module slot 01</p>
-          <h1>Game One</h1>
+          <h1>Neon Forge Kingdom</h1>
           <p class="hero-text">
-            This station is staged for the first game. The final mechanics can drop into this page
-            while keeping the same tactile interface shell.
+            Explore a bright fantasy-tech kingdom, meet friendly creatures, find artifacts, collect
+            futuristic swords and armor, and grow your character through playful challenges.
           </p>
         </div>
         <aside class="module-card control-card">
           <div class="card-hardware" aria-hidden="true"><span></span><span></span><span></span></div>
-          <p class="card-kicker">Readiness</p>
-          <div class="gauge"><span style="--value: 72%"></span></div>
-          <p>Placeholder game surface, status readouts, and action controls are mounted.</p>
-          <button class="button primary" type="button" disabled>Start disabled</button>
+          <p class="card-kicker">Pilot Status</p>
+          <div class="gauge"><span id="game-one-vital-gauge" style="--value: 100%"></span></div>
+          <p id="game-one-hero-status">Local save core armed. Kingdom generator online.</p>
+          <button class="button primary" id="game-one-quick-fight" type="button">Friendly Challenge</button>
         </aside>
       </section>
-      <section class="section-shell placeholder-console">
-        <div class="screen-card">
-          <span class="screen-label">GAME_01_DISPLAY</span>
-          <div class="empty-slot">Awaiting game logic</div>
+
+      <section class="section-shell game-one-console" id="neon-forge-game">
+        <div class="screen-card rpg-screen">
+          <span class="screen-label"><span>NEON_FORGE_RPG</span><span id="save-status">AUTOSAVE READY</span></span>
+
+          <div class="rpg-layout">
+            <section class="rpg-panel action-panel" id="world-panel" aria-labelledby="route-title">
+              <p class="card-kicker">Explore</p>
+              <h2 id="route-title">Village Center</h2>
+              <div class="map-toolbar">
+                <span id="location-readout">Village Center 0,0</span>
+                <div class="rpg-stat-grid" aria-label="Player stats">
+                  <div>
+                    <span class="readout" id="level-value">1</span>
+                    <span class="readout-label">Level</span>
+                  </div>
+                  <div>
+                    <span class="readout" id="xp-value">0</span>
+                    <span class="readout-label">XP</span>
+                  </div>
+                  <div>
+                    <span class="readout" id="hp-value">100</span>
+                    <span class="readout-label">HP</span>
+                  </div>
+                  <div>
+                    <span class="readout" id="battle-value">0</span>
+                    <span class="readout-label">Battles</span>
+                  </div>
+                </div>
+                <button class="button secondary" id="generate-map-button" type="button">Reset Village</button>
+                <button class="button secondary" id="inventory-toggle-button" type="button" aria-expanded="true" aria-controls="inventory-drawer">Hide Inventory</button>
+                <button class="button secondary" id="fullscreen-button" type="button">Full Screen</button>
+              </div>
+
+              <canvas
+                class="world-view"
+                id="world-view"
+                tabindex="0"
+                width="960"
+                height="560"
+                aria-label="Neon Forge top-down village viewport"
+              ></canvas>
+
+              <div class="control-row">
+                <button class="button primary" id="fight-button" type="button">Challenge</button>
+                <button class="button secondary" id="rest-button" type="button">Snack Heal</button>
+                <button class="button secondary danger-button" id="clear-save-button" type="button">Clear Data</button>
+              </div>
+
+              <div class="inventory-drawer" id="inventory-drawer" tabindex="-1">
+                <section class="rpg-panel equipped-panel" aria-labelledby="equipped-title">
+                  <p class="card-kicker">Equipped</p>
+                  <h2 id="equipped-title">Loadout</h2>
+                  <div class="loadout-grid">
+                    <article class="gear-card" id="weapon-card">
+                      <div class="gear-art sword-art" aria-hidden="true"></div>
+                      <p class="card-kicker">Sword</p>
+                      <h3 id="weapon-name">Bubble Saber</h3>
+                      <p id="weapon-details">Common - Attack 10</p>
+                    </article>
+                    <article class="gear-card" id="armor-card">
+                      <div class="gear-art armor-art" aria-hidden="true"></div>
+                      <p class="card-kicker">Armor</p>
+                      <h3 id="armor-name">Puddle Cape</h3>
+                      <p id="armor-details">Common - Defense 4</p>
+                    </article>
+                  </div>
+                </section>
+
+                <section class="rpg-panel upgrade-panel" aria-labelledby="upgrade-title">
+                  <p class="card-kicker">Upgrade Bench</p>
+                  <h2 id="upgrade-title">Spend XP</h2>
+                  <div class="upgrade-grid">
+                    <button class="upgrade-button" type="button" data-upgrade="health">
+                      <span>Max HP</span>
+                      <small>+20 HP - 45 XP</small>
+                    </button>
+                    <button class="upgrade-button" type="button" data-upgrade="attack">
+                      <span>Attack</span>
+                      <small>+3 attack - 35 XP</small>
+                    </button>
+                    <button class="upgrade-button" type="button" data-upgrade="defense">
+                      <span>Defense</span>
+                      <small>+3 defense - 35 XP</small>
+                    </button>
+                  </div>
+                </section>
+
+                <section class="rpg-panel inventory-panel" aria-labelledby="inventory-title">
+                  <p class="card-kicker">Gear</p>
+                  <h2 id="inventory-title">Inventory</h2>
+                  <div class="inventory-list" id="inventory-list" aria-live="polite"></div>
+                </section>
+
+                <section class="battle-log" aria-labelledby="log-title">
+                  <p class="card-kicker" id="log-title">Log</p>
+                  <div id="battle-log" aria-live="polite"></div>
+                </section>
+              </div>
+            </section>
+          </div>
         </div>
       </section>
     </main>
 
     <footer class="site-footer">
       <div class="section-shell footer-inner">
-        <span class="footer-status"><span class="mini-led"></span>Bay 01 staged</span>
+        <span class="footer-status"><span class="mini-led"></span>Bay 01 saving locally</span>
         <a href="game-two.html">Next bay</a>
       </div>
     </footer>
