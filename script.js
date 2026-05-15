@@ -1805,3 +1805,262 @@ if (gameOneRoot) {
   saveAndRender();
   window.requestAnimationFrame(animateWorld);
 }
+
+const snakeRoot = document.querySelector("#snake-game");
+
+if (snakeRoot) {
+  const bestScoreKey = "snakeHighScoreV1";
+  const canvas = document.querySelector("#snake-board");
+  const context = canvas.getContext("2d");
+  const scoreValue = document.querySelector("#snake-score");
+  const lengthValue = document.querySelector("#snake-length");
+  const statusText = document.querySelector("#snake-status-text");
+  const topline = document.querySelector("#snake-topline");
+  const gauge = document.querySelector("#snake-gauge");
+  const startButton = document.querySelector("#snake-start-button");
+  const restartButton = document.querySelector("#snake-restart-button");
+  const overlay = document.querySelector("#snake-overlay");
+  const finalScoreValue = document.querySelector("#snake-final-score");
+  const bestScoreValue = document.querySelector("#snake-best-score");
+  const overlayRestartButton = document.querySelector("#snake-overlay-restart");
+
+  const gridSize = 16;
+  const tileSize = canvas.width / gridSize;
+  const baseSpeed = 210;
+
+  let snake;
+  let direction;
+  let nextDirection;
+  let apple;
+  let score;
+  let bestScore = Number.parseInt(window.localStorage.getItem(bestScoreKey) ?? "0", 10) || 0;
+  let loopId = null;
+  let isRunning = false;
+  let hasStarted = false;
+
+  function showOverlay() {
+    overlay.hidden = false;
+  }
+
+  function hideOverlay() {
+    overlay.hidden = true;
+  }
+
+  function syncBestScore() {
+    bestScoreValue.textContent = String(bestScore);
+  }
+
+  function randomTile() {
+    return {
+      x: Math.floor(Math.random() * gridSize),
+      y: Math.floor(Math.random() * gridSize),
+    };
+  }
+
+  function drawRoundedRect(x, y, width, height, radius, fill) {
+    context.beginPath();
+    context.roundRect(x, y, width, height, radius);
+    context.fillStyle = fill;
+    context.fill();
+  }
+
+  function placeApple() {
+    let nextApple = randomTile();
+
+    while (snake.some((segment) => segment.x === nextApple.x && segment.y === nextApple.y)) {
+      nextApple = randomTile();
+    }
+
+    apple = nextApple;
+  }
+
+  function updateStats(message) {
+    scoreValue.textContent = String(score);
+    lengthValue.textContent = String(snake.length);
+    gauge.style.setProperty("--value", `${Math.min(100, 16 + score * 6)}%`);
+    statusText.textContent = message;
+    topline.textContent = hasStarted ? `APPLES ${score}` : "APPLE READY";
+    syncBestScore();
+  }
+
+  function resetSnake(startLoop = false) {
+    snake = [
+      { x: 7, y: 8 },
+      { x: 6, y: 8 },
+      { x: 5, y: 8 },
+    ];
+    direction = { x: 1, y: 0 };
+    nextDirection = { x: 1, y: 0 };
+    score = 0;
+    hasStarted = startLoop;
+    hideOverlay();
+    placeApple();
+    updateStats(startLoop ? "Use WASD to chase the apple." : "Press Start Game, then use WASD to move.");
+    drawSnakeGame();
+
+    if (loopId) {
+      window.clearInterval(loopId);
+      loopId = null;
+    }
+
+    isRunning = false;
+
+    if (startLoop) {
+      startSnake();
+    }
+  }
+
+  function drawGrid() {
+    drawRoundedRect(0, 0, canvas.width, canvas.height, 24, "#183125");
+
+    for (let y = 0; y < gridSize; y += 1) {
+      for (let x = 0; x < gridSize; x += 1) {
+        const tileX = x * tileSize;
+        const tileY = y * tileSize;
+        const tileColor = (x + y) % 2 === 0 ? "#244433" : "#2d5340";
+        drawRoundedRect(tileX + 2, tileY + 2, tileSize - 4, tileSize - 4, 9, tileColor);
+      }
+    }
+  }
+
+  function drawApple() {
+    const x = apple.x * tileSize;
+    const y = apple.y * tileSize;
+
+    drawRoundedRect(x + 8, y + 9, tileSize - 16, tileSize - 18, 11, "#ff6c8e");
+    drawRoundedRect(x + 12, y + 13, tileSize - 24, tileSize - 26, 8, "#ffd8e6");
+    drawRoundedRect(x + tileSize / 2 - 3, y + 5, 6, 10, 3, "#7be36e");
+  }
+
+  function drawSnakeGame() {
+    drawGrid();
+    drawApple();
+
+    snake.forEach((segment, index) => {
+      const x = segment.x * tileSize;
+      const y = segment.y * tileSize;
+
+      drawRoundedRect(x + 3, y + 3, tileSize - 6, tileSize - 6, 10, index === 0 ? "#b7ff8c" : "#67ea70");
+      drawRoundedRect(x + 8, y + 8, tileSize - 16, tileSize - 16, 7, index === 0 ? "#ddffb3" : "#98ff9d");
+
+      if (index === 0) {
+        drawRoundedRect(x + 11, y + 12, 4, 4, 2, "#29513a");
+        drawRoundedRect(x + tileSize - 15, y + 12, 4, 4, 2, "#29513a");
+      }
+    });
+  }
+
+  function endSnakeRun(message) {
+    isRunning = false;
+    if (loopId) {
+      window.clearInterval(loopId);
+      loopId = null;
+    }
+    bestScore = Math.max(bestScore, score);
+    window.localStorage.setItem(bestScoreKey, String(bestScore));
+    finalScoreValue.textContent = String(score);
+    syncBestScore();
+    showOverlay();
+    updateStats(message);
+    topline.textContent = "RUN OVER";
+  }
+
+  function stepSnake() {
+    direction = nextDirection;
+    const head = snake[0];
+    const nextHead = {
+      x: head.x + direction.x,
+      y: head.y + direction.y,
+    };
+
+    const hitWall =
+      nextHead.x < 0 ||
+      nextHead.x >= gridSize ||
+      nextHead.y < 0 ||
+      nextHead.y >= gridSize;
+
+    const hitSelf = snake.some((segment) => segment.x === nextHead.x && segment.y === nextHead.y);
+
+    if (hitWall || hitSelf) {
+      drawSnakeGame();
+      endSnakeRun("Game over. Press Restart to try again.");
+      return;
+    }
+
+    snake.unshift(nextHead);
+
+    if (nextHead.x === apple.x && nextHead.y === apple.y) {
+      score += 1;
+      placeApple();
+      updateStats(`Nice. Apple ${score} collected.`);
+    } else {
+      snake.pop();
+    }
+
+    drawSnakeGame();
+    updateStats(statusText.textContent);
+  }
+
+  function startSnake() {
+    if (isRunning) return;
+
+    hasStarted = true;
+    isRunning = true;
+    updateStats("Snake is moving. Stay sharp.");
+    drawSnakeGame();
+    loopId = window.setInterval(stepSnake, baseSpeed);
+  }
+
+  function handleSnakeDirection(key) {
+    const controls = {
+      w: { x: 0, y: -1 },
+      a: { x: -1, y: 0 },
+      s: { x: 0, y: 1 },
+      d: { x: 1, y: 0 },
+    };
+
+    const requested = controls[key];
+    if (!requested) return false;
+
+    const reversing = requested.x === -direction.x && requested.y === -direction.y;
+    if (reversing) return true;
+
+    nextDirection = requested;
+
+    if (!hasStarted) {
+      startSnake();
+    }
+
+    return true;
+  }
+
+  startButton.addEventListener("click", () => {
+    if (!hasStarted) {
+      resetSnake(true);
+      return;
+    }
+
+    startSnake();
+  });
+
+  restartButton.addEventListener("click", () => {
+    resetSnake(false);
+  });
+
+  overlayRestartButton.addEventListener("click", () => {
+    resetSnake(false);
+  });
+
+  window.addEventListener("keydown", (event) => {
+    const isTyping = ["INPUT", "TEXTAREA", "SELECT"].includes(event.target?.tagName);
+    if (isTyping || event.metaKey || event.ctrlKey || event.altKey) return;
+
+    const handled = handleSnakeDirection(event.key.toLowerCase());
+    if (handled) {
+      event.preventDefault();
+    }
+  });
+
+  syncBestScore();
+  resetSnake(false);
+}

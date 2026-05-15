@@ -31,28 +31,69 @@
       </nav>
     </header>
 
-    <main class="game-page">
-      <section class="section-shell game-hero">
+    <main class="game-page snake-page" id="snake-game">
+      <section class="section-shell game-hero snake-hero">
         <div>
           <p class="eyebrow"><span class="mini-led"></span>Module slot 02</p>
-          <h1>Game Two</h1>
+          <h1>Snake</h1>
           <p class="hero-text">
-            This page is the second independent HTML file in the collection, ready to receive a
-            distinct game without changing the surrounding navigation system.
+            Guide the snake with <strong>WASD</strong>, eat apples, grow by one tile each time,
+            and keep your run alive as the scoreboard climbs.
           </p>
         </div>
-        <aside class="module-card control-card">
+        <aside class="module-card control-card snake-status-card">
           <div class="card-hardware" aria-hidden="true"><span></span><span></span><span></span></div>
-          <p class="card-kicker">Readiness</p>
-          <div class="gauge"><span style="--value: 48%"></span></div>
-          <p>Input wells and display zones are reserved for the next implementation pass.</p>
-          <button class="button primary" type="button" disabled>Start disabled</button>
+          <p class="card-kicker">Live run</p>
+          <div class="snake-score-grid" aria-label="Snake game stats">
+            <div class="snake-stat-card">
+              <span class="snake-stat-label">Score</span>
+              <strong id="snake-score">0</strong>
+            </div>
+            <div class="snake-stat-card">
+              <span class="snake-stat-label">Length</span>
+              <strong id="snake-length">1</strong>
+            </div>
+          </div>
+          <div class="gauge" aria-hidden="true"><span id="snake-gauge" style="--value: 16%"></span></div>
+          <p id="snake-status-text">Press Start Game, then use WASD to move.</p>
+          <div class="snake-button-row">
+            <button class="button primary" type="button" id="snake-start-button">Start Game</button>
+            <button class="button secondary" type="button" id="snake-restart-button">Restart</button>
+          </div>
         </aside>
       </section>
-      <section class="section-shell placeholder-console">
-        <div class="screen-card">
-          <span class="screen-label">GAME_02_DISPLAY</span>
-          <div class="empty-slot">Awaiting game logic</div>
+
+      <section class="section-shell snake-console-section">
+        <div class="screen-card snake-console">
+          <div class="screen-label">
+            <span>SNAKE_GRID</span>
+            <span id="snake-topline">APPLE READY</span>
+          </div>
+          <div class="snake-board-shell">
+            <canvas id="snake-board" width="480" height="480" aria-label="Snake game board"></canvas>
+            <div class="snake-overlay" id="snake-overlay" hidden>
+              <div class="snake-overlay-card">
+                <p class="card-kicker">Run complete</p>
+                <h2>Game Over</h2>
+                <div class="snake-overlay-stats">
+                  <div class="snake-overlay-stat">
+                    <span class="snake-stat-label">Your score</span>
+                    <strong id="snake-final-score">0</strong>
+                  </div>
+                  <div class="snake-overlay-stat">
+                    <span class="snake-stat-label">Highest score</span>
+                    <strong id="snake-best-score">0</strong>
+                  </div>
+                </div>
+                <button class="button primary" type="button" id="snake-overlay-restart">Restart</button>
+              </div>
+            </div>
+          </div>
+          <div class="snake-instructions" aria-label="Snake controls">
+            <span>WASD to move</span>
+            <span>Eat apples to grow</span>
+            <span>Don’t hit walls or yourself</span>
+          </div>
         </div>
       </section>
     </main>

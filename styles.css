@@ -632,6 +632,176 @@ h3 {
   text-transform: uppercase;
 }
 
+.snake-page {
+  padding-bottom: 5rem;
+}
+
+.snake-hero {
+  align-items: stretch;
+}
+
+.snake-status-card {
+  justify-content: flex-start;
+  gap: 1.15rem;
+  text-align: center;
+}
+
+.snake-score-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  width: 100%;
+  margin-top: 0.35rem;
+}
+
+.snake-stat-card {
+  padding: 1rem 0.8rem;
+  border-radius: 12px;
+  background: var(--background);
+  box-shadow: var(--shadow-recessed);
+}
+
+.snake-stat-card strong {
+  display: block;
+  margin-top: 0.3rem;
+  font: 800 1.85rem/1 "JetBrains Mono", monospace;
+  color: var(--accent);
+}
+
+.snake-stat-label {
+  display: block;
+  color: var(--text-muted);
+  font: 700 0.72rem/1.2 "JetBrains Mono", monospace;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.snake-button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  justify-content: center;
+  width: 100%;
+}
+
+.snake-button-row .button {
+  flex: 1 1 10rem;
+}
+
+.snake-console-section {
+  margin-top: 1.5rem;
+}
+
+.snake-console {
+  padding: 1.5rem;
+  border: 8px solid #2f454c;
+  border-radius: 28px;
+  background:
+    linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.18) 50%),
+    radial-gradient(circle at 20% 18%, rgba(158, 255, 183, 0.2), transparent 34%),
+    radial-gradient(circle at 78% 16%, rgba(130, 184, 255, 0.18), transparent 30%),
+    #151b1c;
+  background-size: 100% 4px, auto, auto, auto;
+}
+
+.snake-board-shell {
+  position: relative;
+  display: grid;
+  width: min(100%, 36rem);
+  margin: 1.35rem auto 0;
+  padding: 1rem;
+  border-radius: 28px;
+  background: linear-gradient(180deg, #2c4442, #1b2526);
+  box-shadow:
+    inset 8px 8px 18px rgba(0, 0, 0, 0.42),
+    inset -3px -3px 8px rgba(255, 255, 255, 0.1),
+    0 10px 24px rgba(38, 66, 72, 0.18);
+}
+
+.snake-overlay {
+  position: absolute;
+  inset: 1rem;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  border-radius: 24px;
+  background: rgba(9, 19, 18, 0.76);
+  backdrop-filter: blur(8px);
+}
+
+.snake-overlay[hidden] {
+  display: none;
+}
+
+.snake-overlay-card {
+  width: min(100%, 22rem);
+  padding: 1.5rem;
+  border-radius: 20px;
+  background: rgba(224, 229, 236, 0.96);
+  box-shadow: var(--shadow-floating);
+}
+
+.snake-overlay-card h2 {
+  max-width: none;
+  margin-bottom: 1rem;
+}
+
+.snake-overlay-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+  margin-bottom: 1.1rem;
+}
+
+.snake-overlay-stat {
+  padding: 0.95rem 0.75rem;
+  border-radius: 12px;
+  background: var(--foreground);
+  box-shadow: var(--shadow-recessed);
+}
+
+.snake-overlay-stat strong {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--accent);
+  font: 800 1.65rem/1 "JetBrains Mono", monospace;
+}
+
+#snake-board {
+  display: block;
+  width: 100%;
+  max-width: 34rem;
+  aspect-ratio: 1;
+  margin: 0 auto;
+  border-radius: 24px;
+  background: #172221;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  box-shadow:
+    inset 0 0 0 2px rgba(201, 255, 213, 0.18),
+    inset 0 0 40px rgba(111, 235, 168, 0.08);
+}
+
+.snake-instructions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  justify-content: center;
+  margin-top: 1.25rem;
+}
+
+.snake-instructions span {
+  min-height: 2.5rem;
+  padding: 0.65rem 1rem;
+  border-radius: 999px;
+  color: #d7ffe2;
+  font: 700 0.72rem/1 "JetBrains Mono", monospace;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: rgba(181, 255, 199, 0.12);
+  border: 1px solid rgba(181, 255, 199, 0.26);
+}
+
 .site-footer {
   margin-top: 5rem;
   padding: 2rem 0;
@@ -1174,6 +1344,22 @@ h3 {
   .game-grid,
   .rpg-layout {
     grid-template-columns: 1fr;
+  }
+
+  .snake-score-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .snake-overlay-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .snake-button-row {
+    flex-direction: column;
+  }
+
+  .snake-button-row .button {
+    width: 100%;
   }
 
   .action-panel {
