@@ -31,28 +31,72 @@
       </nav>
     </header>
 
-    <main class="game-page">
-      <section class="section-shell game-hero">
+    <main class="game-page merge-grid-page" id="merge-grid-game">
+      <section class="section-shell game-hero merge-grid-hero">
         <div>
           <p class="eyebrow"><span class="mini-led"></span>Module slot 03</p>
-          <h1>Game Three</h1>
+          <h1>2048</h1>
           <p class="hero-text">
-            The third station completes the multipage collection structure. It has its own display
-            area, controls, and room for a future game-specific interface.
+            Slide matching numbers together to build larger values. Use <strong>WASD</strong> or
+            the arrow keys, chain merges, and push for the 2048 tile.
           </p>
         </div>
-        <aside class="module-card control-card">
+        <aside class="module-card control-card merge-grid-status-card">
           <div class="card-hardware" aria-hidden="true"><span></span><span></span><span></span></div>
-          <p class="card-kicker">Readiness</p>
-          <div class="gauge"><span style="--value: 64%"></span></div>
-          <p>Reserved for the final game in the trio, with shared styling already connected.</p>
-          <button class="button primary" type="button" disabled>Start disabled</button>
+          <p class="card-kicker">Puzzle run</p>
+          <div class="merge-grid-score-grid" aria-label="2048 scores">
+            <div class="merge-grid-stat-card">
+              <span class="merge-grid-stat-label">Score</span>
+              <strong id="merge-score">0</strong>
+            </div>
+            <div class="merge-grid-stat-card">
+              <span class="merge-grid-stat-label">Best</span>
+              <strong id="merge-best">0</strong>
+            </div>
+          </div>
+          <div class="gauge" aria-hidden="true"><span id="merge-gauge" style="--value: 12%"></span></div>
+          <p id="merge-status-text">Start a new game and combine matching numbers.</p>
+          <div class="merge-grid-button-row">
+            <button class="button primary" type="button" id="merge-new-game">New Game</button>
+          </div>
         </aside>
       </section>
-      <section class="section-shell placeholder-console">
-        <div class="screen-card">
-          <span class="screen-label">GAME_03_DISPLAY</span>
-          <div class="empty-slot">Awaiting game logic</div>
+
+      <section class="section-shell merge-grid-console-section">
+        <div class="screen-card merge-grid-console">
+          <div class="screen-label">
+            <span>MERGE_GRID</span>
+            <span id="merge-topline">READY</span>
+          </div>
+          <div class="merge-grid-board-shell">
+            <div class="merge-grid-board" id="merge-board" role="grid" aria-label="2048 board">
+              <div class="merge-grid-cells" id="merge-cells"></div>
+              <div class="merge-grid-tiles" id="merge-tiles"></div>
+            </div>
+            <div class="merge-grid-overlay" id="merge-overlay" hidden>
+              <div class="merge-grid-overlay-card">
+                <p class="card-kicker">Board locked</p>
+                <h2>Game Over</h2>
+                <p>No more moves left on the board.</p>
+                <div class="merge-grid-overlay-stats">
+                  <div class="merge-grid-overlay-stat">
+                    <span class="merge-grid-stat-label">Score</span>
+                    <strong id="merge-final-score">0</strong>
+                  </div>
+                  <div class="merge-grid-overlay-stat">
+                    <span class="merge-grid-stat-label">Best</span>
+                    <strong id="merge-final-best">0</strong>
+                  </div>
+                </div>
+                <button class="button primary" type="button" id="merge-overlay-restart">Restart</button>
+              </div>
+            </div>
+          </div>
+          <div class="merge-grid-instructions" aria-label="2048 controls">
+            <span>WASD or arrows</span>
+            <span>Match equal tiles</span>
+            <span>Reach 2048</span>
+          </div>
         </div>
       </section>
     </main>

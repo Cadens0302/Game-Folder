@@ -2064,3 +2064,339 @@ if (snakeRoot) {
   syncBestScore();
   resetSnake(false);
 }
+
+const mergeGridRoot = document.querySelector("#merge-grid-game");
+
+if (mergeGridRoot) {
+  const bestKey = "mergeGridBestV1";
+  const size = 4;
+  const cellsRoot = document.querySelector("#merge-cells");
+  const tilesRoot = document.querySelector("#merge-tiles");
+  const scoreValue = document.querySelector("#merge-score");
+  const bestValue = document.querySelector("#merge-best");
+  const statusText = document.querySelector("#merge-status-text");
+  const topline = document.querySelector("#merge-topline");
+  const gauge = document.querySelector("#merge-gauge");
+  const newGameButton = document.querySelector("#merge-new-game");
+  const overlay = document.querySelector("#merge-overlay");
+  const finalScoreValue = document.querySelector("#merge-final-score");
+  const finalBestValue = document.querySelector("#merge-final-best");
+  const overlayRestartButton = document.querySelector("#merge-overlay-restart");
+
+  let board = [];
+  let score = 0;
+  let bestScore = Number.parseInt(window.localStorage.getItem(bestKey) ?? "0", 10) || 0;
+  let won = false;
+  let gameOver = false;
+
+  cellsRoot.innerHTML = "";
+  for (let index = 0; index < size * size; index += 1) {
+    const cell = document.createElement("div");
+    cell.className = "merge-grid-cell";
+    cellsRoot.append(cell);
+  }
+
+  function hideOverlay() {
+    overlay.hidden = true;
+  }
+
+  function showOverlay() {
+    overlay.hidden = false;
+  }
+
+  function emptyBoard() {
+    return Array.from({ length: size }, () => Array(size).fill(0));
+  }
+
+  function cloneBoard(source) {
+    return source.map((row) => [...row]);
+  }
+
+  function randomEmptyCell() {
+    const empty = [];
+
+    board.forEach((row, rowIndex) => {
+      row.forEach((value, columnIndex) => {
+        if (!value) {
+          empty.push({ row: rowIndex, col: columnIndex });
+        }
+      });
+    });
+
+    if (!empty.length) return null;
+    return empty[Math.floor(Math.random() * empty.length)];
+  }
+
+  function addRandomTile() {
+    const cell = randomEmptyCell();
+    if (!cell) return;
+
+    board[cell.row][cell.col] = Math.random() < 0.9 ? 2 : 4;
+  }
+
+  function syncScores() {
+    scoreValue.textContent = String(score);
+    bestValue.textContent = String(bestScore);
+    finalBestValue.textContent = String(bestScore);
+    gauge.style.setProperty("--value", `${Math.min(100, 12 + score / 40)}%`);
+  }
+
+  function getTileMetrics() {
+    const gap = Number.parseFloat(window.getComputedStyle(cellsRoot).gap) || 12.8;
+    const rect = tilesRoot.getBoundingClientRect();
+    const cellSize = (rect.width - gap * (size - 1)) / size;
+    const step = cellSize + gap;
+
+    return { cellSize, step };
+  }
+
+  function findMatchIndex(candidates, targetRow, targetCol) {
+    if (!candidates.length) return -1;
+
+    let bestIndex = 0;
+    let bestDistance = Number.POSITIVE_INFINITY;
+    candidates.forEach((candidate, index) => {
+      const distance = Math.abs(candidate.row - targetRow) + Math.abs(candidate.col - targetCol);
+      if (distance < bestDistance) {
+        bestDistance = distance;
+        bestIndex = index;
+      }
+    });
+
+    return bestIndex;
+  }
+
+  function renderBoard(previousBoard = null, pops = []) {
+    tilesRoot.innerHTML = "";
+    const popSet = new Set(pops.map(([row, col]) => `${row},${col}`));
+    const previousPositions = new Map();
+    const { cellSize, step } = getTileMetrics();
+
+    if (previousBoard) {
+      previousBoard.forEach((row, rowIndex) => {
+        row.forEach((value, columnIndex) => {
+          if (!value) return;
+          const key = String(value);
+          const list = previousPositions.get(key) ?? [];
+          list.push({ row: rowIndex, col: columnIndex });
+          previousPositions.set(key, list);
+        });
+      });
+    }
+
+    board.forEach((row, rowIndex) => {
+      row.forEach((value, columnIndex) => {
+        if (!value) return;
+
+        const tile = document.createElement("div");
+        tile.className = "merge-grid-tile";
+        if (popSet.has(`${rowIndex},${columnIndex}`)) {
+          tile.classList.add("merge-pop");
+        }
+
+        tile.dataset.value = String(value);
+        tile.textContent = String(value);
+        tile.style.width = `${cellSize}px`;
+        tile.style.height = `${cellSize}px`;
+        tile.style.left = `${columnIndex * step}px`;
+        tile.style.top = `${rowIndex * step}px`;
+        tilesRoot.append(tile);
+
+        const key = String(value);
+        const matches = previousPositions.get(key) ?? [];
+        const matchIndex = findMatchIndex(matches, rowIndex, columnIndex);
+        const previous = matchIndex >= 0 ? matches.splice(matchIndex, 1)[0] : null;
+        const deltaX = previous ? (previous.col - columnIndex) * step : 0;
+        const deltaY = previous ? (previous.row - rowIndex) * step : 0;
+
+        if (previous && (deltaX !== 0 || deltaY !== 0)) {
+          tile.animate(
+            [
+              { transform: `translate(${deltaX}px, ${deltaY}px)` },
+              { transform: "translate(0px, 0px)" },
+            ],
+            {
+              duration: 260,
+              easing: "cubic-bezier(0.2, 0.85, 0.22, 1)",
+            },
+          );
+        }
+      });
+    });
+
+    syncScores();
+  }
+
+  function updateStatus(message) {
+    statusText.textContent = message;
+    topline.textContent = gameOver ? "NO MOVES" : won ? "2048 REACHED" : `SCORE ${score}`;
+  }
+
+  function slideAndMerge(line) {
+    const compact = line.filter(Boolean);
+    const merged = [];
+    const pops = [];
+    let gained = 0;
+
+    for (let index = 0; index < compact.length; index += 1) {
+      const current = compact[index];
+      const next = compact[index + 1];
+
+      if (current && current === next) {
+        const mergedValue = current * 2;
+        merged.push(mergedValue);
+        gained += mergedValue;
+        pops.push(merged.length - 1);
+        index += 1;
+      } else {
+        merged.push(current);
+      }
+    }
+
+    while (merged.length < size) {
+      merged.push(0);
+    }
+
+    return { line: merged, gained, pops };
+  }
+
+  function boardsEqual(first, second) {
+    return first.every((row, rowIndex) => row.every((value, columnIndex) => value === second[rowIndex][columnIndex]));
+  }
+
+  function canMove() {
+    for (let row = 0; row < size; row += 1) {
+      for (let col = 0; col < size; col += 1) {
+        const value = board[row][col];
+        if (!value) return true;
+        if (col < size - 1 && value === board[row][col + 1]) return true;
+        if (row < size - 1 && value === board[row + 1][col]) return true;
+      }
+    }
+
+    return false;
+  }
+
+  function move(direction) {
+    if (gameOver) return;
+
+    const previousBoard = cloneBoard(board);
+    let nextBoard = emptyBoard();
+    let gained = 0;
+    const pops = [];
+
+    if (direction === "left" || direction === "right") {
+      for (let row = 0; row < size; row += 1) {
+        const source = [...board[row]];
+        const working = direction === "right" ? source.reverse() : source;
+        const result = slideAndMerge(working);
+        let line = result.line;
+
+        if (direction === "right") {
+          line = [...line].reverse();
+          result.pops.forEach((index) => pops.push([row, size - 1 - index]));
+        } else {
+          result.pops.forEach((index) => pops.push([row, index]));
+        }
+
+        nextBoard[row] = line;
+        gained += result.gained;
+      }
+    } else {
+      for (let col = 0; col < size; col += 1) {
+        const source = board.map((row) => row[col]);
+        const working = direction === "down" ? source.reverse() : source;
+        const result = slideAndMerge(working);
+        let line = result.line;
+
+        if (direction === "down") {
+          line = [...line].reverse();
+          result.pops.forEach((index) => pops.push([size - 1 - index, col]));
+        } else {
+          result.pops.forEach((index) => pops.push([index, col]));
+        }
+
+        line.forEach((value, rowIndex) => {
+          nextBoard[rowIndex][col] = value;
+        });
+        gained += result.gained;
+      }
+    }
+
+    if (boardsEqual(previousBoard, nextBoard)) {
+      return;
+    }
+
+    board = nextBoard;
+    score += gained;
+    bestScore = Math.max(bestScore, score);
+    window.localStorage.setItem(bestKey, String(bestScore));
+    addRandomTile();
+
+    if (!won && board.some((row) => row.some((value) => value >= 2048))) {
+      won = true;
+      updateStatus("You reached 2048! Keep going if you want a bigger score.");
+    } else if (!canMove()) {
+      gameOver = true;
+      finalScoreValue.textContent = String(score);
+      finalBestValue.textContent = String(bestScore);
+      renderBoard(previousBoard, pops);
+      updateStatus("No moves left. Start a new game to try again.");
+      showOverlay();
+      return;
+    } else {
+      updateStatus(gained ? `Merged tiles for +${gained} points.` : "Board shifted.");
+    }
+
+    renderBoard(previousBoard, pops);
+  }
+
+  function startGame() {
+    board = emptyBoard();
+    score = 0;
+    won = false;
+    gameOver = false;
+    hideOverlay();
+    addRandomTile();
+    addRandomTile();
+    renderBoard();
+    updateStatus("Combine matching tiles to climb higher.");
+  }
+
+  function handleInput(key) {
+    const directionMap = {
+      ArrowUp: "up",
+      ArrowDown: "down",
+      ArrowLeft: "left",
+      ArrowRight: "right",
+      w: "up",
+      a: "left",
+      s: "down",
+      d: "right",
+    };
+
+    const direction = directionMap[key];
+    if (!direction) return false;
+
+    move(direction);
+    return true;
+  }
+
+  newGameButton.addEventListener("click", startGame);
+  overlayRestartButton.addEventListener("click", startGame);
+
+  window.addEventListener("keydown", (event) => {
+    const isTyping = ["INPUT", "TEXTAREA", "SELECT"].includes(event.target?.tagName);
+    if (isTyping || event.metaKey || event.ctrlKey || event.altKey) return;
+
+    if (handleInput(event.key)) {
+      event.preventDefault();
+    }
+  });
+
+  window.addEventListener("resize", () => {
+    renderBoard();
+  });
+
+  startGame();
+}
