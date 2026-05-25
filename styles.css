@@ -1133,10 +1133,20 @@ h3 {
 
 .gear-card {
   position: relative;
+  display: flex;
   min-height: 15rem;
+  flex-direction: column;
   padding: 1rem;
   overflow: hidden;
   border-width: 2px;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.94), transparent 34%),
+    linear-gradient(180deg, rgba(255, 239, 188, 0.66), rgba(255, 255, 255, 0.9) 28%, rgba(210, 247, 255, 0.92) 100%);
+  box-shadow:
+    0 14px 24px rgba(74, 118, 144, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92),
+    inset 0 -2px 0 rgba(111, 165, 195, 0.18);
 }
 
 .gear-card::before,
@@ -1185,49 +1195,157 @@ h3 {
   border-color: rgba(234, 179, 8, 0.62);
 }
 
+.gear-card::after {
+  position: absolute;
+  top: 0.9rem;
+  right: 0.9rem;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 999px;
+  content: "";
+  background:
+    radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.95), transparent 24%),
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.7), rgba(113, 167, 221, 0.3) 60%, rgba(113, 167, 221, 0.06) 74%, transparent 75%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.96), 0 4px 10px rgba(53, 80, 95, 0.12);
+  opacity: 0.9;
+}
+
 .gear-art {
   position: relative;
   display: grid;
-  width: min(8rem, 80%);
-  height: 7rem;
+  width: min(8.75rem, 88%);
+  height: 7.5rem;
   margin: 0 auto 1rem;
   place-items: center;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.94), transparent 20%),
+    linear-gradient(180deg, rgba(253, 247, 216, 0.92), rgba(211, 244, 255, 0.9));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.94),
+    inset 0 -2px 0 rgba(108, 166, 199, 0.14),
+    0 10px 18px rgba(79, 112, 133, 0.14);
 }
 
 .sword-art::before {
-  width: 1.1rem;
-  height: 5.8rem;
-  border-radius: 0;
+  width: 1.3rem;
+  height: 5.7rem;
+  border-radius: 999px 999px 10px 10px;
   content: "";
   background:
-    linear-gradient(90deg, transparent 0 18%, #d8ffe4 18% 35%, #ffffff 35% 55%, #38bdf8 55% 82%, transparent 82%),
-    #7dd3fc;
-  box-shadow: 0 0 0 3px rgba(125, 211, 252, 0.35);
-  transform: rotate(42deg);
+    linear-gradient(90deg, transparent 0 16%, #dcfff6 16% 31%, #ffffff 31% 56%, #78d7ff 56% 80%, transparent 80%),
+    linear-gradient(180deg, #a6f1ff, #5bc7ff 68%, #3aa5e8);
+  box-shadow: 0 0 0 4px rgba(125, 211, 252, 0.24), 0 0 16px rgba(113, 226, 255, 0.22);
+  transform: translateY(-0.3rem) rotate(38deg);
 }
 
 .sword-art::after {
   position: absolute;
-  width: 4.4rem;
-  height: 0.7rem;
-  border-radius: 0;
+  width: 4.8rem;
+  height: 0.95rem;
+  border-radius: 999px;
   content: "";
-  background: linear-gradient(90deg, #ff4757, #f8fafc, #ff4757);
-  box-shadow: 0 0 0 3px rgba(255, 71, 87, 0.26);
-  transform: translateY(2rem) rotate(42deg);
+  background:
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.92), transparent 18%),
+    linear-gradient(90deg, #ff8aa6, #fff8ff 50%, #ff8aa6);
+  box-shadow: 0 0 0 4px rgba(255, 124, 151, 0.22);
+  transform: translate(0.1rem, 2rem) rotate(38deg);
 }
 
 .armor-art::before {
-  width: 5.6rem;
-  height: 5.6rem;
-  border: 2px solid rgba(216, 255, 228, 0.76);
-  border-radius: 0;
+  width: 5.9rem;
+  height: 5.9rem;
+  border: 3px solid rgba(226, 248, 255, 0.88);
+  border-radius: 26px 26px 32px 32px;
   content: "";
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.55) 0 22%, transparent 22% 100%),
-    linear-gradient(180deg, rgba(125, 211, 252, 0.42), rgba(255, 71, 87, 0.18));
+    radial-gradient(circle at 35% 24%, rgba(255, 255, 255, 0.85), transparent 18%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.65) 0 22%, transparent 22% 100%),
+    linear-gradient(180deg, rgba(147, 231, 255, 0.72), rgba(255, 168, 196, 0.44));
   clip-path: polygon(15% 5%, 85% 5%, 95% 42%, 74% 95%, 26% 95%, 5% 42%);
-  box-shadow: inset 0 0 0 4px rgba(255, 255, 255, 0.16), 0 0 0 4px rgba(125, 211, 252, 0.28);
+  box-shadow:
+    inset 0 0 0 4px rgba(255, 255, 255, 0.18),
+    0 0 0 4px rgba(125, 211, 252, 0.24),
+    0 10px 16px rgba(125, 211, 252, 0.16);
+}
+
+.gear-topline,
+.inventory-copy-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.7rem;
+}
+
+.gear-rarity-pill,
+.inventory-rarity-pill,
+.gear-stat-pill,
+.gear-value-pill,
+.inventory-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2rem;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid rgba(103, 163, 197, 0.18);
+  border-radius: 999px;
+  color: #44606f;
+  font: 700 0.66rem/1 "JetBrains Mono", monospace;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.84);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 4px 10px rgba(84, 122, 146, 0.08);
+}
+
+.gear-badges,
+.inventory-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.6rem 0 0.55rem;
+}
+
+.gear-stat-pill,
+.inventory-tag {
+  color: #0b6f84;
+  background: rgba(202, 247, 255, 0.92);
+}
+
+.gear-value-pill,
+.inventory-tag-value {
+  color: #9a4665;
+  background: rgba(255, 229, 241, 0.92);
+}
+
+.gear-card > p:last-child,
+.inventory-caption {
+  margin-top: auto;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.gear-card[data-rarity="uncommon"] .gear-rarity-pill,
+.inventory-item[data-rarity="uncommon"] .inventory-rarity-pill {
+  color: #17693b;
+  background: rgba(219, 255, 226, 0.94);
+}
+
+.gear-card[data-rarity="rare"] .gear-rarity-pill,
+.inventory-item[data-rarity="rare"] .inventory-rarity-pill {
+  color: #205db4;
+  background: rgba(220, 237, 255, 0.96);
+}
+
+.gear-card[data-rarity="epic"] .gear-rarity-pill,
+.inventory-item[data-rarity="epic"] .inventory-rarity-pill {
+  color: #7a39b8;
+  background: rgba(242, 226, 255, 0.96);
+}
+
+.gear-card[data-rarity="legendary"] .gear-rarity-pill,
+.inventory-item[data-rarity="legendary"] .inventory-rarity-pill {
+  color: #8f6103;
+  background: rgba(255, 245, 197, 0.96);
 }
 
 .map-toolbar {
@@ -1404,9 +1522,13 @@ h3 {
   margin-top: 0;
   padding: 0.65rem;
   border: 3px solid rgba(36, 157, 255, 0.82);
-  border-radius: 10px;
-  background: rgba(245, 255, 240, 0.94);
-  box-shadow: 8px 8px 0 rgba(79, 112, 133, 0.18), -3px -3px 0 rgba(255, 255, 255, 0.78);
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.98), transparent 30%),
+    linear-gradient(180deg, rgba(255, 249, 227, 0.96), rgba(233, 250, 255, 0.94));
+  box-shadow:
+    0 18px 28px rgba(79, 112, 133, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92);
 }
 
 .inventory-drawer[hidden] {
@@ -1423,13 +1545,13 @@ h3 {
 }
 
 .inventory-drawer .gear-card {
-  min-height: 8.5rem;
-  padding: 0.65rem;
+  min-height: 12.75rem;
+  padding: 0.9rem;
 }
 
 .inventory-drawer .gear-art {
-  height: 4.5rem;
-  margin-bottom: 0.5rem;
+  height: 5.75rem;
+  margin-bottom: 0.75rem;
 }
 
 .danger-button {
@@ -1452,10 +1574,75 @@ h3 {
   align-items: center;
   padding: 1rem;
   overflow: hidden;
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.94), transparent 30%),
+    linear-gradient(180deg, rgba(255, 252, 238, 0.95), rgba(228, 248, 255, 0.92));
+  box-shadow:
+    0 12px 24px rgba(79, 112, 133, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92);
+}
+
+.inventory-item-shell {
+  display: grid;
+  grid-template-columns: 5.4rem minmax(0, 1fr);
+  gap: 0.95rem;
+  align-items: center;
+}
+
+.inventory-art {
+  position: relative;
+  display: grid;
+  width: 5.4rem;
+  height: 5.4rem;
+  place-items: center;
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 30% 26%, rgba(255, 255, 255, 0.95), transparent 20%),
+    linear-gradient(180deg, rgba(253, 245, 208, 0.94), rgba(214, 245, 255, 0.92));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.94),
+    inset 0 -2px 0 rgba(108, 166, 199, 0.16),
+    0 8px 14px rgba(79, 112, 133, 0.12);
+}
+
+.inventory-art.sword-art::before {
+  width: 1rem;
+  height: 3.8rem;
+  box-shadow: 0 0 0 3px rgba(125, 211, 252, 0.2), 0 0 12px rgba(113, 226, 255, 0.16);
+}
+
+.inventory-art.sword-art::after {
+  width: 3.3rem;
+  height: 0.78rem;
+  box-shadow: 0 0 0 3px rgba(255, 124, 151, 0.18);
+  transform: translate(0, 1.3rem) rotate(38deg);
+}
+
+.inventory-art.armor-art::before {
+  width: 3.9rem;
+  height: 3.9rem;
+  box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.18), 0 0 0 3px rgba(125, 211, 252, 0.18);
+}
+
+.inventory-copy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.inventory-copy h3 {
+  margin: 0;
+}
+
+.inventory-copy-top .card-kicker {
+  margin: 0;
 }
 
 .inventory-actions {
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   justify-content: center;
   gap: 0.5rem;
@@ -1463,15 +1650,17 @@ h3 {
 
 .inventory-actions .button {
   min-height: 2.5rem;
+  min-width: 5.75rem;
   padding-inline: 0.8rem;
   font-size: 0.68rem;
 }
 
 .inventory-empty {
   margin: 0;
-  padding: 1rem;
+  padding: 1.1rem;
   border: 1px dashed rgba(158, 255, 183, 0.28);
-  border-radius: 4px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.74);
 }
 
 .battle-log {
@@ -1660,6 +1849,26 @@ h3 {
   .inventory-item,
   .inventory-drawer {
     grid-template-columns: 1fr;
+  }
+
+  .inventory-item-shell {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .inventory-copy {
+    align-items: center;
+  }
+
+  .inventory-copy-top,
+  .gear-topline {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .inventory-actions {
+    flex-direction: row;
   }
 
   .inventory-drawer {

@@ -46,7 +46,6 @@
           <p class="card-kicker">Pilot Status</p>
           <div class="gauge"><span id="game-one-vital-gauge" style="--value: 100%"></span></div>
           <p id="game-one-hero-status">Local save core armed. Kingdom generator online.</p>
-          <button class="button primary" id="game-one-quick-fight" type="button">Friendly Challenge</button>
         </aside>
       </section>
 
@@ -93,8 +92,6 @@
               ></canvas>
 
               <div class="control-row">
-                <button class="button primary" id="fight-button" type="button">Challenge</button>
-                <button class="button secondary" id="rest-button" type="button">Snack Heal</button>
                 <button class="button secondary danger-button" id="clear-save-button" type="button">Clear Data</button>
               </div>
 
@@ -105,14 +102,28 @@
                   <div class="loadout-grid">
                     <article class="gear-card" id="weapon-card">
                       <div class="gear-art sword-art" aria-hidden="true"></div>
-                      <p class="card-kicker">Sword</p>
+                      <div class="gear-topline">
+                        <p class="card-kicker">Sword</p>
+                        <span class="gear-rarity-pill" id="weapon-rarity">Common</span>
+                      </div>
                       <h3 id="weapon-name">Bubble Saber</h3>
+                      <div class="gear-badges">
+                        <span class="gear-stat-pill" id="weapon-stat">Attack 10</span>
+                        <span class="gear-value-pill" id="weapon-value">Trade 18 XP</span>
+                      </div>
                       <p id="weapon-details">Common - Attack 10</p>
                     </article>
                     <article class="gear-card" id="armor-card">
                       <div class="gear-art armor-art" aria-hidden="true"></div>
-                      <p class="card-kicker">Armor</p>
+                      <div class="gear-topline">
+                        <p class="card-kicker">Armor</p>
+                        <span class="gear-rarity-pill" id="armor-rarity">Common</span>
+                      </div>
                       <h3 id="armor-name">Puddle Cape</h3>
+                      <div class="gear-badges">
+                        <span class="gear-stat-pill" id="armor-stat">Defense 4</span>
+                        <span class="gear-value-pill" id="armor-value">Trade 18 XP</span>
+                      </div>
                       <p id="armor-details">Common - Defense 4</p>
                     </article>
                   </div>
